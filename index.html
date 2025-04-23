@@ -78,6 +78,17 @@
       font-weight: 700;
     }
 
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 2px solid #d4af37;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
     #resultado, #resultado-edad {
       font-size: 20px;
       font-weight: 700;
@@ -87,20 +98,48 @@
 
     button {
       display: block;
-      margin: 20px auto;
-      padding: 10px 25px;
+      margin: 20px auto 0 auto;
+      padding: 12px 30px;
       background-color: black;
       color: white;
       border: none;
       border-radius: 8px;
       font-weight: 700;
       cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #333;
     }
 
     .logo {
       width: 300px;
       display: block;
       margin: 30px auto 10px auto;
+    }
+
+    form label[for="edad"] {
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: 500;
+      display: block;
+      text-align: center;
+    }
+
+    #historia-cerveza {
+      display: none;
+      margin-top: 20px;
+      font-size: 16px;
+      line-height: 1.6;
+      opacity: 0;
+      transition: opacity 1s ease-in;
+    }
+
+    #historia-cerveza.visible {
+      display: block;
+      opacity: 1;
     }
   </style>
 </head>
@@ -113,8 +152,8 @@
     <div class="container">
       <h1>Verificación de edad</h1>
       <form id="formulario-edad">
-        <label for="edad">¿Cuántos años tienes?</label>
-        <input type="number" id="edad" name="edad" required min="0" max="130" style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 6px;">
+        <label for="edad">¿Cuántos años tenés?</label>
+        <input type="number" id="edad" name="edad" required min="0" max="130">
         <button type="submit">Verificar edad</button>
       </form>
       <div id="resultado-edad"></div>
@@ -133,18 +172,40 @@
     </div>
   </div>
 
-  <!-- Resultado Apto -->
-  <div class="pantalla" id="etapa-final" style="display: none;">
-    <div class="container">
-      <h1>🎉 ¡Bienvenido/a! 🍻</h1>
-      <p style="text-align: center;">Ahora sí... estás habilitado para disfrutar esta experiencia.</p>
-    </div>
+<!-- Resultado Apto -->
+<div class="pantalla" id="etapa-final" style="display: none;">
+  <div class="container">
+
+    <h1>🎉 ¡Bienvenido/a! 🍻</h1>
+    <p style="text-align: center;">
+      Ahora sí... estás habilitado para disfrutar esta experiencia.
+    </p>
+
+    <!-- Sección Historia de la Cerveza -->
+    <section id="historia-cerveza">
+      <h2>Nuestra historia 🍺</h2>
+      <p>
+        Todo comenzó un día cualquiera, después de una jornada de trabajo intensa. Como siempre, me senté con mi papá a compartir una cerveza, ese ritual que teníamos para bajar el ritmo y reconectar. Pero hubo un momento en que nos dimos cuenta de algo: <strong>ninguna cerveza nos representaba</strong>.<br><br>
+
+        Sentíamos que faltaba algo. Que las cervezas que encontrábamos en el mercado no tenían alma, no contaban una historia, no eran parte de un momento real.<br><br>
+
+        Ahí nació la idea. ¿Y si hacíamos la nuestra? Una cerveza que no solo sea rica, sino que <strong>cuente quiénes somos</strong>. Una cerveza artesanal hecha con dedicación, pasión y valores familiares.<br><br>
+
+        Desde entonces, empezamos a experimentar. En la cocina, en el garage, probando recetas, equivocándonos, mejorando, soñando. Hasta que nació la primera tirada. Y la compartimos, como siempre, con los nuestros.<br><br>
+
+        Hoy, nuestra cerveza es un homenaje a esos pequeños rituales. A los días largos. A los brindis sinceros. A la familia.<br><br>
+
+        <em>Gracias por ser parte de esta historia.</em>
+      </p>
+    </section>
+
   </div>
+</div>
 
   <!-- Resultado No Apto -->
   <div class="pantalla" id="etapa-noapto" style="display: none;">
     <div class="container">
-      <h1>❌ NO APTO ❌</h1>
+      <h1>❌ NO APTO/A ❌</h1>
       <p style="text-align: center;">Tus respuestas indican que todavía te falta un poco de formación capitalista.</p>
     </div>
   </div>
@@ -204,6 +265,7 @@
     const etapa2 = document.getElementById('etapa-2');
     const etapaFinal = document.getElementById('etapa-final');
     const etapaNoApto = document.getElementById('etapa-noapto');
+    const historiaCerveza = document.getElementById('historia-cerveza');
 
     formularioEdad.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -221,7 +283,6 @@
     function iniciarTest() {
       const preguntasContainer = document.getElementById('preguntas');
       const formulario = document.getElementById('formulario');
-      const resultado = document.getElementById('resultado');
       const sonidoApto = document.getElementById('sonido-apto');
       const sonidoNoApto = document.getElementById('sonido-noapto');
 
@@ -258,32 +319,29 @@
       formulario.addEventListener('submit', function(event) {
         event.preventDefault();
         let respuestasCorrectas = 0;
-        const respuestas = new FormData(formulario);
-        for (let value of respuestas.values()) {
-          if (value === "correcto") respuestasCorrectas++;
-        }
+        const respuestasUsuario = document.querySelectorAll('#formulario input[type="radio"]:checked');
+        respuestasUsuario.forEach(input => {
+          if (input.value === 'correcto') {
+            respuestasCorrectas++;
+          }
+        });
 
-        if (respuestasCorrectas >= 4) {
-          resultado.textContent = `¡Perfecto! Obtuviste ${respuestasCorrectas}/5 correctas.`;
-          resultado.style.color = "green";
+        etapa1.style.display = 'none';
+
+        if (respuestasCorrectas >= 3) {
+          etapaFinal.style.display = 'block';
           sonidoApto.play();
           document.body.classList.add('botella-fondo');
           setTimeout(() => {
-            etapa1.style.display = 'none';
-            etapaFinal.style.display = 'block';
-          }, 4000);
+            historiaCerveza.classList.add('visible');
+          }, 1000);
         } else {
-          resultado.textContent = `No apto/a. Obtuviste ${respuestasCorrectas}/5.`;
-          resultado.style.color = "red";
+          etapaNoApto.style.display = 'block';
           sonidoNoApto.play();
-          document.body.classList.remove('botella-fondo');
-          setTimeout(() => {
-            etapa1.style.display = 'none';
-            etapaNoApto.style.display = 'block';
-          }, 4000);
         }
       });
     }
   </script>
+
 </body>
 </html>

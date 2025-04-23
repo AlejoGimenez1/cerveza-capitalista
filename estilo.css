@@ -3,22 +3,24 @@
 
 /* Estilos generales */
 body {
-    background-image: url('fondo formulario.jpg'); /* Asegurate de que el nombre esté bien y no tenga errores */
+    background-image: url('botella_capitalista.png'); /* Asegurate que el nombre y extensión coincidan exactamente */
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     background-attachment: fixed;
+
     font-family: 'Montserrat', sans-serif;
     margin: 0;
-    padding: 0;
-    
+    padding: 20px;
+
     display: flex;
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
     color: #333;
-    padding: 20px;
 }
 
+/* Animación de entrada para el logo */
 @keyframes entradaLogo {
     0% {
         opacity: 0;
@@ -37,6 +39,7 @@ body {
     animation: entradaLogo 1.2s ease-out;
 }
 
+/* Contenedor principal */
 .container {
     background-color: #ffffff;
     border-radius: 16px;
@@ -48,6 +51,7 @@ body {
     border: 2px solid #a9925f;
 }
 
+/* Título */
 h1 {
     font-size: 28px;
     text-align: center;
@@ -56,6 +60,7 @@ h1 {
     font-weight: 700;
 }
 
+/* Preguntas */
 .question {
     font-size: 18px;
     margin-bottom: 16px;
@@ -63,6 +68,7 @@ h1 {
     font-weight: 700;
 }
 
+/* Lista de respuestas */
 .answers {
     list-style: none;
     padding: 0;
@@ -87,10 +93,12 @@ h1 {
     transform: scale(1.01);
 }
 
+/* Input dentro de la respuesta */
 .answer-input {
     margin-right: 10px;
 }
 
+/* Botón */
 button {
     background-color: #a9925f;
     color: white;
@@ -110,6 +118,7 @@ button:hover {
     transform: scale(1.02);
 }
 
+/* Footer */
 footer {
     text-align: center;
     margin-top: 24px;
@@ -127,7 +136,7 @@ footer a:hover {
     text-decoration: underline;
 }
 
-/* ✅ Clase para resaltar la respuesta seleccionada */
+/* ✅ Respuesta seleccionada */
 .answers li.selected {
     background-color: #d6c4a3;
     border-color: #a9925f;
