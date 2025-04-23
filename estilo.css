@@ -1,0 +1,134 @@
+/* Importar la tipografía Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+/* Estilos generales */
+body {
+    background-image: url('fondo formulario.jpg'); /* Asegurate de que el nombre esté bien y no tenga errores */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    color: #333;
+    padding: 20px;
+}
+
+@keyframes entradaLogo {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo {
+    width: 300px;
+    display: block;
+    margin: 30px auto 10px auto;
+    animation: entradaLogo 1.2s ease-out;
+}
+
+.container {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    padding: 24px;
+    box-sizing: border-box;
+    border: 2px solid #a9925f;
+}
+
+h1 {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 24px;
+    color: #a9925f;
+    font-weight: 700;
+}
+
+.question {
+    font-size: 18px;
+    margin-bottom: 16px;
+    color: #2c3e50;
+    font-weight: 700;
+}
+
+.answers {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.answers li {
+    font-weight: 400;
+    background-color: #f3f0ea;
+    margin-bottom: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: 1px solid #dcd2be;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.answers li:hover {
+    background-color: #e5ddcf;
+    transform: scale(1.01);
+}
+
+.answer-input {
+    margin-right: 10px;
+}
+
+button {
+    background-color: #a9925f;
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #927f4f;
+    transform: scale(1.02);
+}
+
+footer {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+footer a {
+    color: #a9925f;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* ✅ Clase para resaltar la respuesta seleccionada */
+.answers li.selected {
+    background-color: #d6c4a3;
+    border-color: #a9925f;
+}
