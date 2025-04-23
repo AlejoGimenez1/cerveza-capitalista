@@ -17,7 +17,6 @@
       transition: background-image 0.5s ease;
     }
 
-    /* Fondo con la botella de cerveza */
     body.botella-fondo {
       background-image: url("botella_capitalista.png");
       background-size: cover;
@@ -79,7 +78,7 @@
       font-weight: 700;
     }
 
-    #resultado {
+    #resultado, #resultado-edad {
       font-size: 20px;
       font-weight: 700;
       text-align: center;
@@ -105,100 +104,186 @@
     }
   </style>
 </head>
-<body class="botella-fondo">
+<body>
 
-  <!-- LOGO -->
-  <img src="logo capitalista.png" alt="Logo Cerveza Capitalista" class="logo">
+  <img src="logo_capitalista.png" alt="Logo Cerveza Capitalista" class="logo">
 
-  <div class="container">
-    <h1>¿Sos apto/a para tomar mi cerveza?</h1>
-
-    <form id="formulario">
-      
-      <fieldset>
-        <legend>1. ¿Cuál es tu opinión sobre el papel del Estado en la economía?</legend>
-        <label><input type="radio" name="pregunta1" value="correcto" required> El Estado debe dejar total libertad a los mercados.</label>
-        <label><input type="radio" name="pregunta1" value="incorrecto"> El Estado debe intervenir activamente en la economía.</label>
-      </fieldset>
-
-      <fieldset>
-        <legend>2. ¿Qué piensas acerca de los impuestos sobre la renta?</legend>
-        <label><input type="radio" name="pregunta2" value="correcto" required> Deben ser bajos para incentivar la inversión y el emprendimiento.</label>
-        <label><input type="radio" name="pregunta2" value="incorrecto"> Deben ser altos para financiar programas sociales.</label>
-      </fieldset>
-
-      <fieldset>
-        <legend>3. ¿Cómo ves la propiedad privada?</legend>
-        <label><input type="radio" name="pregunta3" value="correcto" required> Es un derecho inalienable y esencial para el desarrollo económico.</label>
-        <label><input type="radio" name="pregunta3" value="incorrecto"> Debe limitarse en favor de la justicia social.</label>
-      </fieldset>
-
-      <fieldset>
-        <legend>4. ¿Qué opinás sobre las ayudas sociales del gobierno?</legend>
-        <label><input type="radio" name="pregunta4" value="correcto" required> Deben ser limitadas y enfocadas en casos específicos.</label>
-        <label><input type="radio" name="pregunta4" value="incorrecto"> Deben ser ampliadas para reducir desigualdades.</label>
-      </fieldset>
-
-      <fieldset>
-        <legend>5. ¿Qué pensás sobre la inversión extranjera en el país?</legend>
-        <label><input type="radio" name="pregunta5" value="correcto" required> Debe ser promovida sin restricciones.</label>
-        <label><input type="radio" name="pregunta5" value="incorrecto"> Debe ser restringida para proteger la industria nacional.</label>
-      </fieldset>
-
-      <button type="submit">Enviar respuestas</button>
-    </form>
-
-    <div id="resultado"></div>
+  <!-- Verificación de Edad -->
+  <div class="pantalla" id="etapa-2">
+    <div class="container">
+      <h1>Verificación de edad</h1>
+      <form id="formulario-edad">
+        <label for="edad">¿Cuántos años tienes?</label>
+        <input type="number" id="edad" name="edad" required min="0" max="130" style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 6px;">
+        <button type="submit">Verificar edad</button>
+      </form>
+      <div id="resultado-edad"></div>
+    </div>
   </div>
 
-  <!-- Audios -->
+  <!-- Test -->
+  <div class="pantalla" id="etapa-1" style="display: none;">
+    <div class="container">
+      <h1>¿Sos apto/a para tomar la cerveza?</h1>
+      <form id="formulario">
+        <div id="preguntas"></div>
+        <button type="submit">Enviar respuestas</button>
+      </form>
+      <div id="resultado"></div>
+    </div>
+  </div>
+
+  <!-- Resultado Apto -->
+  <div class="pantalla" id="etapa-final" style="display: none;">
+    <div class="container">
+      <h1>🎉 ¡Bienvenido/a! 🍻</h1>
+      <p style="text-align: center;">Ahora sí... estás habilitado para disfrutar esta experiencia.</p>
+    </div>
+  </div>
+
+  <!-- Resultado No Apto -->
+  <div class="pantalla" id="etapa-noapto" style="display: none;">
+    <div class="container">
+      <h1>❌ NO APTO ❌</h1>
+      <p style="text-align: center;">Tus respuestas indican que todavía te falta un poco de formación capitalista.</p>
+    </div>
+  </div>
+
   <audio id="sonido-apto" src="wine-glass-clink-36035.mp3" preload="auto"></audio>
   <audio id="sonido-noapto" src="boo-6377.mp3" preload="auto"></audio>
 
   <script>
-    const formulario = document.getElementById('formulario');
-    const resultado = document.getElementById('resultado');
-    const sonidoApto = document.getElementById('sonido-apto');
-    const sonidoNoApto = document.getElementById('sonido-noapto');
-
-    formulario.addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      let respuestasCorrectas = 0;
-      const respuestas = new FormData(formulario);
-
-      for (let value of respuestas.values()) {
-        if (value === "correcto") {
-          respuestasCorrectas++;
-        }
+    const preguntas = [
+      {
+        pregunta: "¿Cuál es tu opinión sobre el papel del Estado en la economía?",
+        respuestas: [
+          { texto: "El Estado debe dejar total libertad a los mercados.", valor: "correcto" },
+          { texto: "El Estado debe intervenir activamente en la economía.", valor: "incorrecto" }
+        ]
+      },
+      {
+        pregunta: "¿Qué piensas acerca de los impuestos sobre la renta?",
+        respuestas: [
+          { texto: "Deben ser bajos para incentivar la inversión y el emprendimiento.", valor: "correcto" },
+          { texto: "Deben ser altos para financiar programas sociales.", valor: "incorrecto" }
+        ]
+      },
+      {
+        pregunta: "¿Cómo ves la propiedad privada?",
+        respuestas: [
+          { texto: "Es un derecho inalienable y esencial para el desarrollo económico.", valor: "correcto" },
+          { texto: "Debe limitarse en favor de la justicia social.", valor: "incorrecto" }
+        ]
+      },
+      {
+        pregunta: "¿Qué opinás sobre las ayudas sociales del gobierno?",
+        respuestas: [
+          { texto: "Deben ser limitadas y enfocadas en casos específicos.", valor: "correcto" },
+          { texto: "Deben ser ampliadas para reducir desigualdades.", valor: "incorrecto" }
+        ]
+      },
+      {
+        pregunta: "¿Qué pensás sobre la inversión extranjera en el país?",
+        respuestas: [
+          { texto: "Debe ser promovida sin restricciones.", valor: "correcto" },
+          { texto: "Debe ser restringida para proteger la industria nacional.", valor: "incorrecto" }
+        ]
       }
+    ];
 
-      if (respuestasCorrectas >= 4) {
-        resultado.textContent = `¡Perfecto! Obtuviste ${respuestasCorrectas}/5 correctas. Se nota que agarras la pala, o sea digamos ... Podes tomar la cerveza. Fin.`;
-        resultado.style.color = "green";
-        sonidoApto.play();
+    function mezclarArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
 
-        document.body.classList.add('botella-fondo'); // FONDO BOTELLA
+    const formularioEdad = document.getElementById('formulario-edad');
+    const resultadoEdad = document.getElementById('resultado-edad');
+    const etapa1 = document.getElementById('etapa-1');
+    const etapa2 = document.getElementById('etapa-2');
+    const etapaFinal = document.getElementById('etapa-final');
+    const etapaNoApto = document.getElementById('etapa-noapto');
+
+    formularioEdad.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const edad = parseInt(document.getElementById('edad').value);
+      if (edad >= 18) {
+        etapa2.style.display = 'none';
+        etapa1.style.display = 'block';
+        iniciarTest();
       } else {
-        resultado.textContent = `No apto/a. Obtuviste ${respuestasCorrectas}/5... O sea digamos te aconsejo agarrar la pala de vez en cuando. Fin.`;
-        resultado.style.color = "red";
-        sonidoNoApto.play();
-
-        document.body.classList.remove('botella-fondo'); // QUITAR FONDO
+        resultadoEdad.textContent = "Lo sentimos, solo mayores de 18 pueden continuar.";
+        resultadoEdad.style.color = "red";
       }
     });
 
-    // Efecto visual al seleccionar
-    document.querySelectorAll('fieldset').forEach(fieldset => {
-      const labels = fieldset.querySelectorAll('label');
-      labels.forEach(label => {
-        label.addEventListener('click', () => {
-          labels.forEach(l => l.classList.remove('seleccionada'));
-          label.classList.add('seleccionada');
-        });
-      });
-    });
-  </script>
+    function iniciarTest() {
+      const preguntasContainer = document.getElementById('preguntas');
+      const formulario = document.getElementById('formulario');
+      const resultado = document.getElementById('resultado');
+      const sonidoApto = document.getElementById('sonido-apto');
+      const sonidoNoApto = document.getElementById('sonido-noapto');
 
+      mezclarArray(preguntas);
+      preguntas.forEach(p => mezclarArray(p.respuestas));
+
+      preguntas.forEach(pregunta => {
+        const fieldset = document.createElement('fieldset');
+        const legend = document.createElement('legend');
+        legend.textContent = pregunta.pregunta;
+        fieldset.appendChild(legend);
+
+        pregunta.respuestas.forEach(respuesta => {
+          const label = document.createElement('label');
+          const input = document.createElement('input');
+          input.type = 'radio';
+          input.name = pregunta.pregunta;
+          input.value = respuesta.valor;
+          input.required = true;
+
+          label.appendChild(input);
+          label.appendChild(document.createTextNode(respuesta.texto));
+          fieldset.appendChild(label);
+
+          label.addEventListener('click', () => {
+            fieldset.querySelectorAll('label').forEach(l => l.classList.remove('seleccionada'));
+            label.classList.add('seleccionada');
+          });
+        });
+
+        preguntasContainer.appendChild(fieldset);
+      });
+
+      formulario.addEventListener('submit', function(event) {
+        event.preventDefault();
+        let respuestasCorrectas = 0;
+        const respuestas = new FormData(formulario);
+        for (let value of respuestas.values()) {
+          if (value === "correcto") respuestasCorrectas++;
+        }
+
+        if (respuestasCorrectas >= 4) {
+          resultado.textContent = `¡Perfecto! Obtuviste ${respuestasCorrectas}/5 correctas.`;
+          resultado.style.color = "green";
+          sonidoApto.play();
+          document.body.classList.add('botella-fondo');
+          setTimeout(() => {
+            etapa1.style.display = 'none';
+            etapaFinal.style.display = 'block';
+          }, 4000);
+        } else {
+          resultado.textContent = `No apto/a. Obtuviste ${respuestasCorrectas}/5.`;
+          resultado.style.color = "red";
+          sonidoNoApto.play();
+          document.body.classList.remove('botella-fondo');
+          setTimeout(() => {
+            etapa1.style.display = 'none';
+            etapaNoApto.style.display = 'block';
+          }, 4000);
+        }
+      });
+    }
+  </script>
 </body>
 </html>
