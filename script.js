@@ -1,4 +1,3 @@
-<script>
   document.addEventListener("DOMContentLoaded", function () {
     const formulario = document.getElementById('formulario');
     const resultado = document.getElementById('resultado');
@@ -52,4 +51,3 @@
       });
     });
   });
-</script>
