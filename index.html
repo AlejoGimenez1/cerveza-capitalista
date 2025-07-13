@@ -1,348 +1,554 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cerveza Capitalista</title>
 
-  <!-- Google Fonts Montserrat -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <!-- Tipografía -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
-    body {
-      background-color: #ae9959;
-      font-family: 'Montserrat', sans-serif;
+    * {
       margin: 0;
       padding: 0;
-      transition: background-image 0.5s ease;
-    }
-
-    body.botella-fondo {
-      background-image: url("botella_capitalista.png");
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-
-    .container {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 30px;
-      background-color: white;
-      border-radius: 12px;
-      margin-top: 40px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-      animation: fadeIn 1.5s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    h1 {
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    fieldset {
-      margin-bottom: 20px;
-      border: none;
-    }
-
-    legend {
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    label {
-      display: block;
-      margin: 5px 0;
-      font-weight: 500;
-      padding: 10px;
-      border-radius: 6px;
-      transition: background-color 0.3s ease;
-      cursor: pointer;
-    }
-
-    .seleccionada {
-      background-color: #d4af37;
-      color: black;
-      font-weight: 700;
-    }
-
-    input[type="number"] {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      border-radius: 8px;
-      border: 2px solid #d4af37;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 16px;
       box-sizing: border-box;
     }
 
-    #resultado, #resultado-edad {
-      font-size: 20px;
-      font-weight: 700;
-      text-align: center;
-      margin-top: 30px;
+    html {
+      scroll-behavior: smooth;
     }
 
-    button {
-      display: block;
-      margin: 20px auto 0 auto;
-      padding: 12px 30px;
-      background-color: black;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: 700;
+    body {
+      font-family: "Montserrat", sans-serif;
+      background-color: #0d0d0d;
+      color: #fff;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #000000;
+      z-index: 999;
+      padding: 05px 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header .logo {
+      height: 60px; /* Ajusta la altura a tu gusto */
       cursor: pointer;
+    }
+
+    header nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    header nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
       font-size: 16px;
+    }
+
+    section.hero {
+      background-image: linear-gradient(
+          rgba(0, 0, 0, 0.6),
+          rgba(0, 0, 0, 0.6)
+        ),
+        url("fondo_hero.png");
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 20px;
+      margin-top: 80px; /* Para que no quede tapado por el header fijo */
+    }
+
+    .hero h1 {
+      font-family: "Cinzel", serif;
+      font-size: 48px;
+      color: #fff;
+      text-shadow: 2px 2px 10px #000000;
+    }
+
+    section {
+      padding: 80px 20px;
+    }
+
+    #productos {
+      background-color: #000000;
+    }
+
+    .productos-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .producto {
+      background-color: #1b1b1b;
+      border: 2px solid #d4af37;
+      border-radius: 12px;
+      width: 300px;
+      text-align: center;
+      padding: 20px;
+      transition: transform 0.3s;
+    }
+
+    .producto:hover {
+      transform: scale(1.05);
+    }
+
+    .producto img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .producto h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .producto p {
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    .producto button {
+      background-color: #d4af37;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #historia {
+      background-image: url("fondo_cerveza_2.jpg");
+      background-size: cover;
+      background-position: center;
+      color: white;
+    }
+
+    #historia .historia-contenido {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 12px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    #contacto {
+      background-color: #d4af37;
+      text-align: center;
+      color: black; /* texto negro para mejor contraste */
+      font-weight: 700; /* texto más pesado */
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); /* sombra sutil */
+      padding: 50px 20px; /* más espacio arriba y abajo */
+    }
+
+    #contacto p {
+      margin-bottom: 20px; /* separa el texto del mail */
+      font-size: 20px; /* un poco más grande para que destaque */
+      font-weight: 600;
+    }
+
+    #contacto a {
+      margin: 0 15px; /* más espacio horizontal entre links */
+      display: inline-block;
+      color: black; /* que los links también sean negros */
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 700;
+      text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.6); /* sombra clara para links */
+      transition: color 0.3s ease;
+      padding: 5px 10px; /* un poco de espacio interno para mejor click */
+    }
+
+    #contacto a:hover {
+      color: #fff; /* cambio a blanco cuando pasás el mouse */
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #111;
+      color: #888;
+    }
+
+    .boton-comprar {
+      display: inline-block;
+      background-color: #d4af37;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
       transition: background-color 0.3s ease;
     }
 
-    button:hover {
-      background-color: #333;
-    }
-
-    .logo {
-      width: 300px;
-      display: block;
-      margin: 30px auto 10px auto;
-    }
-
-    form label[for="edad"] {
-      margin-top: 10px;
-      font-size: 16px;
-      font-weight: 500;
-      display: block;
-      text-align: center;
-    }
-
-    #historia-cerveza {
-      display: none;
-      margin-top: 20px;
-      font-size: 16px;
-      line-height: 1.6;
-      opacity: 0;
-      transition: opacity 1s ease-in;
-    }
-
-    #historia-cerveza.visible {
-      display: block;
-      opacity: 1;
+    .boton-comprar:hover {
+      background-color: #e0c76d;
     }
   </style>
 </head>
 <body>
 
-  <img src="logo_capitalista.png" alt="Logo Cerveza Capitalista" class="logo">
+<!-- TEST DE ADMISIÓN -->
+<div id="admission-test" style="
+  background-image: 
+    linear-gradient(rgba(13,13,13,0.8), rgba(13,13,13,0.8)),
+    url('fondo_test.jpg');
+  background-size: cover; 
+  background-position: center;
+  color: #d4af37; 
+  height: 100vh; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  flex-direction: column; 
+  text-align: center; 
+  padding: 40px;
+  font-family: 'Montserrat', sans-serif;
+">
+  <h1 style="
+    font-family: 'Cinzel', serif; 
+    font-size: 36px; 
+    margin-bottom: 40px; /* más espacio abajo */
+    text-shadow: 2px 2px 8px #000000;
+  ">¿Estás hecho para la libertad?</h1>
 
-  <!-- Verificación de Edad -->
-  <div class="pantalla" id="etapa-2">
-    <div class="container">
-      <h1>Verificación de edad</h1>
-      <form id="formulario-edad">
-        <label for="edad">¿Cuántos años tenés?</label>
-        <input type="number" id="edad" name="edad" required min="0" max="130">
-        <button type="submit">Verificar edad</button>
-      </form>
-      <div id="resultado-edad"></div>
+  <label for="edad" style="font-weight: 700; font-size: 18px; margin-bottom: 12px; display: block; text-shadow: 1px 1px 2px #000;">Ingresá tu edad:</label>
+  <input 
+    type="number" 
+    id="edad" 
+    style="
+      margin: 10px auto 40px auto; /* más margen inferior */
+      padding: 12px 15px; 
+      font-size: 18px; 
+      border-radius: 8px; 
+      border: 2px solid #d4af37; 
+      background-color: #1b1b1b; 
+      color: #d4af37;
+      width: 160px;
+      text-align: center;
+      box-shadow: inset 0 0 5px #d4af37;
+      outline: none;
+      transition: border-color 0.3s ease;
+      display: block;
+    "
+    min="0"
+  />
+  
+  <div id="preguntas-container" style="display: none; max-width: 600px; width: 100%;">
+    <div style="margin-bottom: 40px;"> <!-- aumento de 25px a 40px -->
+      <p id="pregunta1" style="font-weight: 700; font-size: 18px; text-shadow: 1px 1px 2px #000;"></p>
+      <select id="respuesta1" style="
+        width: 100%;
+        padding: 12px; /* un poquito más de padding */
+        font-size: 16px; 
+        border-radius: 8px; 
+        border: 2px solid #d4af37; 
+        background-color: #1b1b1b; 
+        color: #d4af37;
+        box-shadow: inset 0 0 5px #d4af37;
+        outline: none;
+        transition: border-color 0.3s ease;
+      "></select>
     </div>
-  </div>
 
-  <!-- Test -->
-  <div class="pantalla" id="etapa-1" style="display: none;">
-    <div class="container">
-      <h1>¿Sos apto/a para tomar la cerveza?</h1>
-      <form id="formulario">
-        <div id="preguntas"></div>
-        <button type="submit">Enviar respuestas</button>
-      </form>
-      <div id="resultado"></div>
+    <div style="margin-bottom: 40px;">
+      <p id="pregunta2" style="font-weight: 700; font-size: 18px; text-shadow: 1px 1px 2px #000;"></p>
+      <select id="respuesta2" style="
+        width: 100%;
+        padding: 12px; 
+        font-size: 16px; 
+        border-radius: 8px; 
+        border: 2px solid #d4af37; 
+        background-color: #1b1b1b; 
+        color: #d4af37;
+        box-shadow: inset 0 0 5px #d4af37;
+        outline: none;
+        transition: border-color 0.3s ease;
+      "></select>
     </div>
+
+    <div style="margin-bottom: 50px;">
+      <p id="pregunta3" style="font-weight: 700; font-size: 18px; text-shadow: 1px 1px 2px #000;"></p>
+      <select id="respuesta3" style="
+        width: 100%;
+        padding: 12px; 
+        font-size: 16px; 
+        border-radius: 8px; 
+        border: 2px solid #d4af37; 
+        background-color: #1b1b1b; 
+        color: #d4af37;
+        box-shadow: inset 0 0 5px #d4af37;
+        outline: none;
+        transition: border-color 0.3s ease;
+      "></select>
+    </div>
+
+    <button onclick="validarTest()" style="
+      background-color: #d4af37; 
+      color: black; 
+      padding: 14px 30px; 
+      border: none; 
+      font-weight: bold; 
+      font-size: 18px;
+      border-radius: 8px; 
+      cursor: pointer; 
+      box-shadow: 0 4px 10px rgba(212,175,55,0.6);
+      transition: background-color 0.3s ease;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      display: block;
+    " 
+    onmouseover="this.style.backgroundColor='#e0c76d';" 
+    onmouseout="this.style.backgroundColor='#d4af37';"
+    >
+      Entrar al sitio
+    </button>
   </div>
+</div>
 
-<!-- Resultado Apto -->
-<div class="pantalla" id="etapa-final" style="display: none;">
-  <div class="container">
 
-    <h1>🎉 ¡Bienvenido/a! 🍻</h1>
-    <p style="text-align: center;">
-      Ahora sí... estás habilitado para disfrutar esta experiencia.
+<!-- CONTENIDO PRINCIPAL OCULTO HASTA PASAR TEST -->
+<div id="contenido-principal" style="display: none;">
+
+  <header>
+    <img src="logo_capitalista.png" alt="Logo Cerveza Capitalista" class="logo" />
+    <nav>
+      <a href="#productos">Productos</a>
+      <a href="#historia">Historia</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </header>
+
+<section class="hero">
+  <div style="text-align: center;">
+    <h1 style="
+      font-family: 'Cinzel', serif;
+      font-size: 48px;
+      color: #fff;
+      text-shadow: 2px 2px 10px #000000;
+      margin-bottom: 20px;
+    ">
+      "No todos están hechos para la libertad."
+    </h1>
+    <p style="
+      font-family: 'Cinzel', serif;
+      font-size: 24px;
+      color: #d4af37;
+      text-shadow: 2px 2px 6px #000;
+      letter-spacing: 1px;
+      margin-top: 0;
+    ">
+      Pero vos sí.
     </p>
-
-<!-- Sección Historia de la Cerveza -->
-<section id="historia-cerveza">
-  <h2>Nuestra historia 🍺</h2>
-  <p>
-    Todo comenzó un día cualquiera, después de una jornada larga. De esas en las que sentís el cuerpo cansado, pero el alma tranquila porque diste todo. Como tantas veces, me senté con mi viejo a tomar una cerveza. Era nuestro pequeño ritual al final del día: brindar por lo hecho, por lo aprendido, por lo que todavía soñábamos construir.<br><br>
-
-    Pero esa vez algo nos hizo ruido. Ninguna cerveza nos hablaba de nosotros. Ninguna contaba el esfuerzo, el sacrificio, la alegría de ver crecer algo propio. Faltaba una cerveza que no fuera solo un producto, sino un símbolo de lo que significa laburar con pasión y convicción.<br><br>
-
-    Así nació esta idea. La de hacer nuestra propia cerveza. No para competir con nadie, sino para expresar algo más profundo: que <strong>cada uno puede crear, mejorar y dejar su marca</strong>. Que el progreso no viene de esperar, sino de hacer.<br><br>
-
-    Arrancamos sin saber mucho, pero con hambre de aprender. Ensayo y error. Mucho trabajo, muchas pruebas, muchas ganas. Y de a poco, como todo lo que vale la pena, fue tomando forma.<br><br>
-
-    Hoy, nuestra cerveza representa ese recorrido. <strong>El valor de esforzarse, de crecer por mérito propio, de brindar por cada paso que uno da sin depender de nadie.</strong><br><br>
-
-    <em>Porque creemos que todo sacrificio merece su recompensa.<br>
-    Gracias por ser parte de esta historia.</em>
-  </p>
+  </div>
 </section>
 
-</div>
-</div>
 
-  <!-- Resultado No Apto -->
-  <div class="pantalla" id="etapa-noapto" style="display: none;">
-    <div class="container">
-      <h1>❌ NO APTO/A ❌</h1>
-      <p style="text-align: center;">Tus respuestas indican que todavía te falta un poco de formación capitalista.</p>
+  <section id="productos">
+    <h2 style="text-align: center; font-size: 32px; margin-bottom: 40px;">
+      Nuestras Cervezas 🍺
+    </h2>
+    <div class="productos-container">
+      <div class="producto">
+        <img src="Buffet IPA - copia.jpg" alt="IPA" />
+        <h3>Buffet IPA</h3>
+        <p>Inspirada en la mano que mueve todo, pero no se ve.</p>
+        <a href="https://www.mercadopago.com.ar/" target="_blank" class="boton-comprar">Comprar</a>
+      </div>
+      <div class="producto">
+        <img src="Bezos Amber - copia.jpg" alt="Amber" />
+        <h3>Bezos Amber (Lager)</h3>
+        <p>Rubia, intensa, con sabor a capitalismo.</p>
+        <a href="https://www.mercadopago.com.ar/" target="_blank" class="boton-comprar">Comprar</a>
+      </div>
+      <div>
+        <div class="producto">
+        <img src="Henry Porter - copia.jpg" alt="Henry Porter" />
+        <h3>Henry Porter</h3>
+        <p>Clásica, robusta, con el temple de los que hacen historia.</p>
+        <a href="https://www.mercadopago.com.ar/" target="_blank" class="boton-comprar">Comprar</a>
+      </div>
+      </div>
+        <div class="producto">
+        <img src="Rockefeller Pilsen - copia.jpg" alt="Rockefeller Pilsen" />
+        <h3>Rockefeller Pilsen</h3>
+        <p>Fresca, clara y directa. Como las reglas del juego capitalista.</p>
+        <a href="https://www.mercadopago.com.ar/" target="_blank" class="boton-comprar">Comprar</a>
+      </div>
+      <div>
+        <div class="producto">
+        <img src="Steve.jpg" alt="Steve Blonde" />
+        <h3>Steve Blonde</h3>
+        <p>Ligera, brillante y simple. Como las mejores ideas que cambian el mundo.</p>
+        <a href="https://www.mercadopago.com.ar/" target="_blank" class="boton-comprar">Comprar</a>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <audio id="sonido-apto" src="wine-glass-clink-36035.mp3" preload="auto"></audio>
-  <audio id="sonido-noapto" src="boo-6377.mp3" preload="auto"></audio>
+  <section id="historia" style="
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                      url('fondo_historia.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 80px 20px;
+  ">
+    <div class="historia-contenido" style="
+      background-color: rgba(0, 0, 0, 0.65);
+      padding: 40px;
+      border-radius: 12px;
+      max-width: 800px;
+      margin: auto;
+    ">
+      <h2 style="text-align: center; font-size: 32px; margin-bottom: 30px;">Nuestra Historia 🍺</h2>
+      <p>
+        Todo comenzó un día cualquiera, después de una jornada larga. De esas en
+        las que sentís el cuerpo cansado, pero el alma tranquila porque diste
+        todo. Como tantas veces, me senté con mi viejo a tomar una cerveza.
+        Era nuestro pequeño ritual al final del día: brindar por lo hecho, por
+        lo aprendido, por lo que todavía soñábamos construir.<br /><br />
 
-  <script>
-    const preguntas = [
-      {
-        pregunta: "¿Cuál es tu opinión sobre el papel del Estado en la economía?",
-        respuestas: [
-          { texto: "El Estado debe dejar total libertad a los mercados.", valor: "correcto" },
-          { texto: "El Estado debe intervenir activamente en la economía.", valor: "incorrecto" }
-        ]
-      },
-      {
-        pregunta: "¿Qué piensas acerca de los impuestos sobre la renta?",
-        respuestas: [
-          { texto: "Deben ser bajos para incentivar la inversión y el emprendimiento.", valor: "correcto" },
-          { texto: "Deben ser altos para financiar programas sociales.", valor: "incorrecto" }
-        ]
-      },
-      {
-        pregunta: "¿Cómo ves la propiedad privada?",
-        respuestas: [
-          { texto: "Es un derecho inalienable y esencial para el desarrollo económico.", valor: "correcto" },
-          { texto: "Debe limitarse en favor de la justicia social.", valor: "incorrecto" }
-        ]
-      },
-      {
-        pregunta: "¿Qué opinás sobre las ayudas sociales del gobierno?",
-        respuestas: [
-          { texto: "Deben ser limitadas y enfocadas en casos específicos.", valor: "correcto" },
-          { texto: "Deben ser ampliadas para reducir desigualdades.", valor: "incorrecto" }
-        ]
-      },
-      {
-        pregunta: "¿Qué pensás sobre la inversión extranjera en el país?",
-        respuestas: [
-          { texto: "Debe ser promovida sin restricciones.", valor: "correcto" },
-          { texto: "Debe ser restringida para proteger la industria nacional.", valor: "incorrecto" }
-        ]
-      }
-    ];
+        Pero esa vez algo nos hizo ruido. Ninguna cerveza nos hablaba de
+        nosotros. Ninguna contaba el esfuerzo, el sacrificio, la alegría de ver
+        crecer algo propio. Faltaba una cerveza que no fuera solo un producto,
+        sino un símbolo de lo que significa laburar con pasión y convicción.<br /><br />
 
-    function mezclarArray(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
+        Así nació esta idea. No para competir con nadie, sino para expresar algo
+        más profundo: que <strong>cada uno puede crear, mejorar y dejar su marca</strong>.
+        Que el progreso no viene de esperar, sino de hacer.<br /><br />
+
+        Hoy, nuestra cerveza representa ese recorrido.
+        <strong>El valor de esforzarse, de crecer por mérito propio, de brindar por
+        cada paso que uno da sin depender de nadie.</strong><br /><br />
+
+        <em>Porque creemos que todo sacrificio merece su recompensa. Gracias por
+        ser parte de esta historia.</em>
+      </p>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <h2 style="font-size: 28px;">Contacto</h2>
+    <p>Sumate al Club Capitalista o escribinos:</p>
+    <a href="mailto:contacto@cervezacapitalista.com">contacto@cervezacapitalista.com</a>
+    <div style="margin-top: 20px;">
+      <a href="https://www.instagram.com/capitalistbeer" target="_blank">Instagram</a>
+      <a href="https://twitter.com/capitalistabeer" target="_blank">Twitter</a>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Cerveza Capitalista. Todos los derechos reservados.
+  </footer>
+
+  <!-- Botón flotante de WhatsApp -->
+  <a href="https://wa.me/541166030163?text=Hola!%20Quiero%20saber%20más%20sobre%20Cerveza%20Capitalista" 
+    target="_blank" 
+    style="
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      background-color: #d4af37;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    ">
+    <img src="whatsapp.png" alt="WhatsApp" style="width: 35px; height: 35px;" />
+  </a>
+
+</div>
+
+<script>
+  const preguntas = [
+    {
+      texto: "¿Qué economista promovió el libre mercado con 'La Riqueza de las Naciones'?",
+      opciones: ["Adam Smith", "Karl Marx", "John Maynard Keynes"]
+    },
+    {
+      texto: "¿Qué país es conocido como el símbolo del capitalismo moderno?",
+      opciones: ["Estados Unidos", "China", "Cuba"]
+    },
+    {
+      texto: "¿Cuál es uno de los pilares del sistema capitalista?",
+      opciones: ["Propiedad privada", "Control estatal de precios", "Planificación central"]
+    },
+    {
+      texto: "¿Qué empresario es un ícono del capitalismo actual?",
+      opciones: ["Elon Musk", "Che Guevara", "Lenin"]
+    },
+    {
+      texto: "¿Qué caracteriza a un mercado libre?",
+      opciones: ["Oferta y demanda", "Precios fijos por el gobierno", "Producción estatal"]
     }
+  ];
 
-    const formularioEdad = document.getElementById('formulario-edad');
-    const resultadoEdad = document.getElementById('resultado-edad');
-    const etapa1 = document.getElementById('etapa-1');
-    const etapa2 = document.getElementById('etapa-2');
-    const etapaFinal = document.getElementById('etapa-final');
-    const etapaNoApto = document.getElementById('etapa-noapto');
-    const historiaCerveza = document.getElementById('historia-cerveza');
+  function mostrarPreguntas() {
+    const seleccionadas = preguntas.sort(() => 0.5 - Math.random()).slice(0, 3);
 
-    formularioEdad.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const edad = parseInt(document.getElementById('edad').value);
-      if (edad >= 18) {
-        etapa2.style.display = 'none';
-        etapa1.style.display = 'block';
-        iniciarTest();
-      } else {
-        resultadoEdad.textContent = "Lo sentimos, solo mayores de 18 pueden continuar.";
-        resultadoEdad.style.color = "red";
-      }
-    });
-
-    function iniciarTest() {
-      const preguntasContainer = document.getElementById('preguntas');
-      const formulario = document.getElementById('formulario');
-      const sonidoApto = document.getElementById('sonido-apto');
-      const sonidoNoApto = document.getElementById('sonido-noapto');
-
-      mezclarArray(preguntas);
-      preguntas.forEach(p => mezclarArray(p.respuestas));
-
-      preguntas.forEach(pregunta => {
-        const fieldset = document.createElement('fieldset');
-        const legend = document.createElement('legend');
-        legend.textContent = pregunta.pregunta;
-        fieldset.appendChild(legend);
-
-        pregunta.respuestas.forEach(respuesta => {
-          const label = document.createElement('label');
-          const input = document.createElement('input');
-          input.type = 'radio';
-          input.name = pregunta.pregunta;
-          input.value = respuesta.valor;
-          input.required = true;
-
-          label.appendChild(input);
-          label.appendChild(document.createTextNode(respuesta.texto));
-          fieldset.appendChild(label);
-
-          label.addEventListener('click', () => {
-            fieldset.querySelectorAll('label').forEach(l => l.classList.remove('seleccionada'));
-            label.classList.add('seleccionada');
-          });
-        });
-
-        preguntasContainer.appendChild(fieldset);
-      });
-
-      formulario.addEventListener('submit', function(event) {
-        event.preventDefault();
-        let respuestasCorrectas = 0;
-        const respuestasUsuario = document.querySelectorAll('#formulario input[type="radio"]:checked');
-        respuestasUsuario.forEach(input => {
-          if (input.value === 'correcto') {
-            respuestasCorrectas++;
-          }
-        });
-
-        etapa1.style.display = 'none';
-
-        if (respuestasCorrectas >= 3) {
-          etapaFinal.style.display = 'block';
-          sonidoApto.play();
-          document.body.classList.add('botella-fondo');
-          setTimeout(() => {
-            historiaCerveza.classList.add('visible');
-          }, 1000);
-        } else {
-          etapaNoApto.style.display = 'block';
-          sonidoNoApto.play();
-        }
+    for (let i = 0; i < 3; i++) {
+      document.getElementById(`pregunta${i+1}`).innerText = seleccionadas[i].texto;
+      const select = document.getElementById(`respuesta${i+1}`);
+      select.innerHTML = "";
+      seleccionadas[i].opciones.forEach(op => {
+        const option = document.createElement("option");
+        option.value = op;
+        option.text = op;
+        select.appendChild(option);
       });
     }
-  </script>
+
+    document.getElementById("preguntas-container").style.display = "block";
+  }
+
+  document.getElementById("edad").addEventListener("change", function() {
+    const edad = parseInt(this.value);
+    if (edad >= 18) {
+      mostrarPreguntas();
+    } else {
+      alert("Debés ser mayor de 18 años para ingresar.");
+      // Por si ingresan menor a 18, ocultamos las preguntas por si ya estaban visibles
+      document.getElementById("preguntas-container").style.display = "none";
+    }
+  });
+
+  function validarTest() {
+    // Aquí podrías agregar validaciones adicionales a las respuestas si querés
+    document.getElementById("admission-test").style.display = "none";
+    document.getElementById("contenido-principal").style.display = "block";
+  }
+</script>
+
+</body>
+</html>
 
 </body>
 </html>
